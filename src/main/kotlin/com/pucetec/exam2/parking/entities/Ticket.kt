@@ -1,6 +1,5 @@
 package com.pucetec.exam2.parking.entities
 
-import com.pucetec.exam2.parking.exceptions.ParkingSpace
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
