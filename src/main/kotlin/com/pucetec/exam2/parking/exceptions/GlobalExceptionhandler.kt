@@ -10,19 +10,21 @@ import java.time.LocalDateTime
 class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException::class)
-    fun handleNotFound(e: ResourceNotFoundException): ResponseEntity<Map<String, Any>> {
-        return buildErrorResponse(HttpStatus.NOT_FOUND, e.message ?: "Resource not found")
-    }
+    fun handleNotFound(e: ResourceNotFoundException): ResponseEntity<Map<String, Any>> =
+        buildErrorResponse(HttpStatus.NOT_FOUND, e.message ?: "Resource not found")
 
     @ExceptionHandler(ParkingFullException::class)
-    fun handleConflict(e: ParkingFullException): ResponseEntity<Map<String, Any>> {
-        return buildErrorResponse(HttpStatus.CONFLICT, e.message ?: "Conflict")
-    }
+    fun handleConflict(e: ParkingFullException): ResponseEntity<Map<String, Any>> =
+        buildErrorResponse(HttpStatus.CONFLICT, e.message ?: "Conflict")
 
     @ExceptionHandler(InvalidTicketStateException::class)
-    fun handleBadRequest(e: InvalidTicketStateException): ResponseEntity<Map<String, Any>> {
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, e.message ?: "Bad request")
-    }
+    fun handleBadRequest(e: InvalidTicketStateException): ResponseEntity<Map<String, Any>> =
+        buildErrorResponse(HttpStatus.BAD_REQUEST, e.message ?: "Bad request")
+
+    // MANEJADOR DE LA NUEVA VALIDACIÓN DE NEGOCIO
+    @ExceptionHandler(VehicleAlreadyParkedException::class)
+    fun handleAlreadyParked(e: VehicleAlreadyParkedException): ResponseEntity<Map<String, Any>> =
+        buildErrorResponse(HttpStatus.BAD_REQUEST, e.message ?: "Vehicle already inside")
 
     private fun buildErrorResponse(status: HttpStatus, message: String): ResponseEntity<Map<String, Any>> {
         return ResponseEntity.status(status).body(
